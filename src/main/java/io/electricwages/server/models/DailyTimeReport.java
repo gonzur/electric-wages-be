@@ -1,4 +1,4 @@
-package io.timetable.server.models;
+package io.electricwages.server.models;
 
 import java.util.ArrayList;
 import java.util.Date;

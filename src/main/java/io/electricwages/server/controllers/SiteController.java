@@ -1,4 +1,4 @@
-package io.timetable.server.controllers;
+package io.electricwages.server.controllers;
 
 import java.util.Optional;
 
@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.timetable.server.models.Site;
+import io.electricwages.server.models.Site;
 
 @RestController
 public class SiteController {
-  @PostMapping
+  @PostMapping("/site")
   public void createSite(@RequestBody Site site) {
     
   }
 
-  @GetMapping
+  @GetMapping("/site")
   public Site getSite(@RequestParam Optional<String> id, @RequestParam Optional<String> address, @RequestParam Optional<String> shortName) {
 
     return new Site(); // placeholder

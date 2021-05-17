@@ -1,4 +1,4 @@
-package io.timetable.server.models;
+package io.electricwages.server.models;
 
 public class Employee {
   private String id;
