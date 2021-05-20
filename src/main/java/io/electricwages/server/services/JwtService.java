@@ -1,7 +1,9 @@
 package io.electricwages.server.services;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -16,13 +18,20 @@ import java.util.Map;
 @PropertySource("classpath:secret.properties")
 public class JwtService {
     @Value("${JWT.secret}")
-    String secret;
-    Algorithm algo;
+    private String secret;
+    private Algorithm algo;
+    private JWTVerifier verifier;
+    private String issuer;
 
     @PostConstruct
     public void init(){
        algo = Algorithm.HMAC256(secret);
+       issuer = "electric-wages";
+       verifier = JWT.require(algo)
+                .withIssuer("electric-wages")
+                .build();
     }
+
     public String createJWT(String username, String role) {
         Map<String, String> body = new HashMap<>();
         body.put("username", username);
@@ -38,7 +47,13 @@ public class JwtService {
                 .sign(algo);
     }
 
-    public void validateJWT(String jwt) {
-
+    public boolean validateJWT(String jwt) {
+        try {
+            verifier.verify(jwt);
+        } catch (JWTVerificationException exception)
+        {
+            return false;
+        }
+        return true;
     }
 }
