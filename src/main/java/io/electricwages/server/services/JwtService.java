@@ -3,7 +3,14 @@ package io.electricwages.server.services;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.MapType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -40,7 +47,7 @@ public class JwtService {
         cal.setTime(new Date());
         cal.add(Calendar.DATE, 1);
 
-        return JWT.create().withIssuer("electric-wages")
+        return JWT.create().withIssuer(this.issuer)
                 .withPayload(body)
                 .withExpiresAt(cal.getTime())
                 .withIssuedAt(new Date())
@@ -50,10 +57,21 @@ public class JwtService {
     public boolean validateJWT(String jwt) {
         try {
             verifier.verify(jwt);
+            return true;
         } catch (JWTVerificationException exception)
         {
             return false;
         }
-        return true;
+    }
+
+    public String getUsername(String jwt) throws JWTDecodeException, JsonProcessingException {
+        String token = JWT.decode(jwt).getPayload();
+        ObjectMapper mapper = new ObjectMapper();
+
+        TypeFactory typeFactory = mapper.getTypeFactory();
+        MapType mapType = typeFactory.constructMapType(HashMap.class, String.class, String.class);
+        HashMap<String, String> map = mapper.readValue(token, mapType);
+
+        return map.get("username");
     }
 }
