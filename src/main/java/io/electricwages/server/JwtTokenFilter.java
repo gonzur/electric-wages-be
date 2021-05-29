@@ -3,6 +3,7 @@ package io.electricwages.server;
 import io.electricwages.server.services.ElectricUserDetailsService;
 import io.electricwages.server.services.JwtService;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
     throws IOException, ServletException {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-
         if(authHeader.isEmpty() || !authHeader.startsWith("Bearer ")) {
             chain.doFilter(request, response);
             return;
