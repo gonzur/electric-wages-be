@@ -5,9 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -22,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@PropertySource("classpath:secret.properties")
+@PropertySource("classpath:secret.yaml")
 public class JwtService {
     @Value("${JWT.secret}")
     private String secret;
