@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.electricwages.server.models.User;
 import io.electricwages.server.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,6 +30,7 @@ public class LoginControllerTest {
         userRepository.save(user);
     }
 
+    @Test
     void loginTest(@Autowired MockMvc mockMvc) throws Exception {
         User user = new User();
         user.setUsername("test");
