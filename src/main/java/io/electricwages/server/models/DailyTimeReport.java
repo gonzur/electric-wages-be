@@ -1,14 +1,22 @@
 package io.electricwages.server.models;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
+@Entity
+@Table(name = "daily_time_report")
 public class DailyTimeReport {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private String id;
   private Date date;
   private double hours;
+  @ManyToOne
   private Site site;
-  private ArrayList<Employee> crew;
+
+  @OneToMany(mappedBy = "report")
+  private Set<EmployeeHour> crewHours;
 
   public String getId() {
     return id;
@@ -34,10 +42,10 @@ public class DailyTimeReport {
   public void setSite(Site site) {
     this.site = site;
   }
-  public ArrayList<Employee> getCrew() {
-    return crew;
+  public Set<EmployeeHour> getCrewHours() {
+    return crewHours;
   }
-  public void setCrew(ArrayList<Employee> crew) {
-    this.crew = crew;
+  public void setCrewHours(Set<EmployeeHour> crewHours) {
+    this.crewHours = crewHours;
   }
 }

@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@PropertySource("classpath:secret.yaml")
+@PropertySource("classpath:secret.properties")
 public class JwtService {
     @Value("${JWT.secret}")
     private String secret;

@@ -1,7 +1,13 @@
 package io.electricwages.server.models;
 
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "site")
 public class Site {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private String id;
   private String address;
   private String shortName;

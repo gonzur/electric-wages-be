@@ -37,3 +37,4 @@ out/
 .vscode/
 /src/main/resources/secret.properties
 /src/main/resources/secret.yaml
+/src/main/resources/postgres.properties

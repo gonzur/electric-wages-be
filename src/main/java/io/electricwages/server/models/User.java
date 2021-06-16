@@ -4,6 +4,7 @@ package io.electricwages.server.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,6 +14,10 @@ public class User {
     private String username;
 
     private String password;
+
+    public User() {
+
+    }
 
     public Long getId() {
         return id;
